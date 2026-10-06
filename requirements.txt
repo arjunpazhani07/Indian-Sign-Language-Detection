@@ -1,0 +1,26 @@
+# ISL Communication System - pinned, mutually-compatible dependencies
+# Verified together (import + functional smoke test) for Windows 11 + Python 3.12.10.
+#
+# Why these exact versions:
+# - mediapipe 0.10.21 is the last line that still ships the classic
+#   mp.solutions.* API (mediapipe>=1.0 removed it) and has native
+#   cp312-win_amd64 wheels.
+# - protobuf is pinned INSIDE the range mediapipe 0.10.21 itself requires
+#   (>=4.25.3,<5). Installing a newer protobuf (5.x/6.x) alongside an older
+#   compiled mediapipe is exactly what caused the previous project's
+#   "cannot import name 'runtime_version' from google.protobuf" crash -
+#   pinning both here prevents pip from ever picking a mismatched pair.
+# - numpy is pinned <2 because mediapipe 0.10.21 requires numpy<2.
+# - No TensorFlow anywhere in this stack.
+
+mediapipe==0.10.21
+protobuf==4.25.3
+numpy==1.26.4
+opencv-contrib-python==4.11.0.86
+scikit-learn==1.5.2
+joblib==1.4.2
+pyttsx3==2.99
+pillow==11.1.0
+requests==2.32.3
+remotezip==0.12.6
+pywin32==306; sys_platform == "win32"
